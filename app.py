@@ -69,8 +69,10 @@ def usage_demo():
     file_uri = 's3://velents-production' + video['video_url'].split('.com')[-1]
     
     applicant_id = video['applicant_id']
-    transcribe_client = boto3.client('transcribe', region_name='us-east-2', aws_access_key_id='AKIA5ANJDXCW6L7D2W5T',
-                                     aws_secret_access_key='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')
+    #'AKIA5ANJDXCW6L7D2W5T'
+    #'+vaBAOtlOvQkAnOCchgRpw+qAAJadqOfR2BRJyTE'
+    transcribe_client = boto3.client('transcribe', region_name='us-east-2', aws_access_key_id='',
+                                     aws_secret_access_key='')
 
     res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
     delete_job("job", transcribe_client)
