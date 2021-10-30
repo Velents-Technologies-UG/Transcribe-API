@@ -74,7 +74,11 @@ def usage_demo():
     transcribe_client = boto3.client('transcribe', region_name='us-east-2', aws_access_key_id='',
                                      aws_secret_access_key='')
 
-    res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
+    try:
+        res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
+    except:
+        delete_job("job", transcribe_client)
+        res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
     delete_job("job", transcribe_client)
     return jsonify(res)
 
