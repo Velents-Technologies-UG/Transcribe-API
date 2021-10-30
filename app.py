@@ -2,12 +2,15 @@ from flask import Flask, jsonify, request, abort
 import boto3
 from functools import wraps
 import requests
-import time
+import os
 import json
 
 
 app = Flask(__name__)
-SECRET_KEY = "$2y$10$Jz2/ngSa.BDzV0m5FQLr.uWGtNu4WzyE8TRtDVEHCIMhjQMxukHcG"
+SECRET_KEY = os.environ.get('SECRET_API_KEY')
+region_name = os.environ.get('AWS_REGION_NAME')
+aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 
 def delete_job(job_name, transcribe_client):
@@ -71,8 +74,8 @@ def usage_demo():
     applicant_id = video['applicant_id']
     #'AKIA5ANJDXCW6L7D2W5T'
     #'+vaBAOtlOvQkAnOCchgRpw+qAAJadqOfR2BRJyTE'
-    transcribe_client = boto3.client('transcribe', region_name='us-east-2', aws_access_key_id='',
-                                     aws_secret_access_key='')
+    transcribe_client = boto3.client('transcribe', region_name=region_name, aws_access_key_id=aws_access_key_id,
+                                     aws_secret_access_key=aws_secret_access_key)
 
     try:
         res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
