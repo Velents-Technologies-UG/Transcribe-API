@@ -72,8 +72,7 @@ def usage_demo():
     file_uri = 's3://velents-production' + video['video_url'].split('.com')[-1]
     
     applicant_id = video['applicant_id']
-    #'AKIA5ANJDXCW6L7D2W5T'
-    #'+vaBAOtlOvQkAnOCchgRpw+qAAJadqOfR2BRJyTE'
+
     transcribe_client = boto3.client('transcribe', region_name=region_name, aws_access_key_id=aws_access_key_id,
                                      aws_secret_access_key=aws_secret_access_key)
 
