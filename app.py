@@ -4,6 +4,7 @@ from functools import wraps
 import requests
 import os
 import json
+import time
 
 
 app = Flask(__name__)
@@ -47,7 +48,7 @@ def transcribe_file(job_name, file_uri, applicantid, transcribe_client):
 
             else:
                 return {"response": {"status_code": 400,  "message": "video can't be processed"}}
-        # time.sleep(1)
+        time.sleep(1)
 
 
 def require_appkey(view_function):
