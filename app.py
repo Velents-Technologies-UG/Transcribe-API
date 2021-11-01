@@ -5,13 +5,15 @@ import requests
 import os
 import json
 import time
+from dotenv import load_dotenv
 
 
+load_dotenv()
 app = Flask(__name__)
-SECRET_KEY = os.environ.get('SECRET_API_KEY')
-region_name = os.environ.get('AWS_REGION_NAME')
-aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
-aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+SECRET_KEY = os.getenv('SECRET_API_KEY')
+region_name = os.getenv('AWS_REGION_NAME')
+aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
 
 def delete_job(job_name, transcribe_client):
