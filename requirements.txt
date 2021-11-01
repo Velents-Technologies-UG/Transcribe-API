@@ -1,5 +1,4 @@
 requests
-functools
 flask
 boto3
 python-dotenv
