@@ -6,6 +6,7 @@ import os
 import json
 import time
 from dotenv import load_dotenv
+import uuid
 
 
 load_dotenv()
@@ -76,7 +77,7 @@ def usage_demo():
     if 'velents-dev-assets' in video['video_url']:
         file_uri = 's3://velents-dev-assets' + video['video_url'].split('.com')[-1]
         region_name = os.getenv('AWS_REGION_NAME1')
-        'eu-west-1'
+        
     else:
         region_name = os.getenv('AWS_REGION_NAME')
         file_uri = 's3://velents-production' + video['video_url'].split('.com')[-1]
@@ -89,12 +90,13 @@ def usage_demo():
     transcribe_client = boto3.client('transcribe', region_name=region_name, aws_access_key_id=aws_access_key_id,
                                      aws_secret_access_key=aws_secret_access_key)
 
-    try:
-        res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
-    except:
-        delete_job("job", transcribe_client)
-        res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
-    delete_job("job", transcribe_client)
+    # try:
+    job_name = 'job'+str(uuid.uuid1())
+    res = transcribe_file(job_name, file_uri, applicant_id, transcribe_client)
+    # except:
+    #     delete_job("job", transcribe_client)
+    #     res = transcribe_file('job', file_uri, applicant_id, transcribe_client)
+    delete_job(job_name, transcribe_client)
     return jsonify(res)
 
 
