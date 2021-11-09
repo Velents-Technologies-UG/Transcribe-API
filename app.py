@@ -29,10 +29,12 @@ def delete_job(job_name, transcribe_client):
 
 def transcribe_file(job_name, file_uri, applicantid, transcribe_client):
     transcribe_client.start_transcription_job(
+        IdentifyLanguage=True,
         TranscriptionJobName=job_name,
         Media={'MediaFileUri': file_uri},
         MediaFormat='mp4',
-        LanguageCode='en-US'
+        # LanguageCode='en-US',
+        LanguageOptions=['ar-SA', 'en-US', 'ar-AE', 'en-IN']
     )
 
     max_tries = 60
@@ -71,10 +73,18 @@ def usage_demo():
 
     # Getting Videos URLs
     video = request.get_json(force=True)['video']
-
-    file_uri = 's3://velents-production' + video['video_url'].split('.com')[-1]
+    if 'velents-dev-assets' in video['video_url']:
+        file_uri = 's3://velents-dev-assets' + video['video_url'].split('.com')[-1]
+        region_name = os.getenv('AWS_REGION_NAME1')
+        'eu-west-1'
+    else:
+        region_name = os.getenv('AWS_REGION_NAME')
+        file_uri = 's3://velents-production' + video['video_url'].split('.com')[-1]
     
     applicant_id = video['applicant_id']
+    # print(file_uri)
+    # print('=========================')
+
 
     transcribe_client = boto3.client('transcribe', region_name=region_name, aws_access_key_id=aws_access_key_id,
                                      aws_secret_access_key=aws_secret_access_key)
